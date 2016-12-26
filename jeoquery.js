@@ -104,6 +104,10 @@ var jeoquery = (function ($) {
 
 (function ($) {
   $.fn.jeoCountrySelect = function (options) {
+    // Default options
+    var settings = $.extend({
+      optionValue: 'countryCode'
+    }, options );    
     var el = this;
     $.when(jeoquery.getGeoNames('countryInfo'))
     .then(function (data) {
@@ -116,7 +120,7 @@ var jeoquery = (function ($) {
       // Insert blank choice
       sortedNames.unshift({countryCode:'', countryName:''});
       var html = $.map(sortedNames, function(c) {
-        return '<option value="' + c.countryCode + '">' + c.countryName + '</option>';
+        return '<option value="' + c[settings.optionValue] + '">' + c.countryName + '</option>';
       });
       el.html(html);
       if (options && options.callback) options.callback(sortedNames);
